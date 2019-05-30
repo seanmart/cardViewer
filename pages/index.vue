@@ -91,8 +91,16 @@ export default {
   perspective: 1000px;
 }
 
+.container{
+  animation: fade-in 2s
+}
 #list{
   -webkit-overflow-scrolling: touch;
   padding: 95px 0px 20px;
+}
+
+@keyframes fade-in{
+  from{opacity: 0}
+  to{opacity: 1}
 }
 </style>
