@@ -132,6 +132,7 @@ export default {
   border:1px solid #ddd;
   background: #f1f1f1;
   color: #1a4369;
+  padding: 20px;
 }
 
 .card .front{
