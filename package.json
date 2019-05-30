@@ -1,0 +1,25 @@
+{
+  "name": "otsukaStories_v1",
+  "version": "1.0.0",
+  "description": "My dandy Nuxt.js project",
+  "author": "Sean metcalf",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "body-scroll-lock": "^2.6.1",
+    "cross-env": "^5.2.0",
+    "gsap": "^2.1.3",
+    "lodash": "^4.17.11",
+    "nuxt": "^2.4.0",
+    "vue-scrollto": "^2.15.0",
+    "vue-virtual-scroll-list": "^1.3.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
