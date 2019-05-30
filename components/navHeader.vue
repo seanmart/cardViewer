@@ -27,6 +27,8 @@ header{
   overflow: hidden;
   transition: top .25s;
   padding: 25px;
+  display: flex;
+  align-items: center;
 }
 
 header.hide {
@@ -34,6 +36,6 @@ header.hide {
 }
 
 .logo{
-  height: 50px;
+  height: 30px;
 }
 </style>
