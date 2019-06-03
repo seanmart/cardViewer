@@ -3,7 +3,14 @@
     <div class="card" ref="card">
       <div class="front side" @click="cardActive()">
         <div class="front-content" ref="front">
-          <h1>{{ card.story.replace(/(([^\s]+\s\s*){10})(.*)/, "$1…") }}</h1>
+          <h1>
+            {{
+              card.story
+                .split(" ")
+                .slice(0, 3)
+                .join(" ")
+            }}...
+          </h1>
         </div>
       </div>
       <div class="back side">
@@ -99,9 +106,11 @@ export default {
       if (!this.tl) return;
 
       let container = this.$refs.container;
+      let front = this.$refs.front;
 
       this.tl.reverse().eventCallback("onReverseComplete", () => {
         TweenMax.set(container, { clearProps: "all" });
+        TweenMax.set(front, { clearProps: "all" });
         this.unhideHeader && this.$store.commit("setHideHeader", false);
         this.unhideHeader = false;
         this.show = false;
@@ -151,6 +160,9 @@ export default {
   background: #fff;
   color: #000;
   font-size: 1.2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card .back{
@@ -159,6 +171,12 @@ export default {
   transform: rotateY(180deg);
   overflow: hidden;
   font-size: 3.4vw;
+  line-height: 6vw;
+}
+
+.front-content{
+  text-align: center;
+  width: 100%;
 }
 
 .back-content{
@@ -187,5 +205,11 @@ export default {
 
 .card .front:active{
   transform: scale(.8);
+}
+
+@media screen and (min-width: 1200px){
+  .card .back{
+    font-size: 2.3em;
+  }
 }
 </style>
