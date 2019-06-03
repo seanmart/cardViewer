@@ -93,6 +93,8 @@ export default {
 
 .list-container{
   perspective: 1000px;
+  overflow: hidden;
+  height: 100vh;
 }
 
 .container{
