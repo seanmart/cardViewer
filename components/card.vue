@@ -124,7 +124,7 @@ export default {
 
 .card-container{
   position: relative;
-  padding: 3px;
+  padding: 5px;
   height: 100%;
   width: 100%;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -137,6 +137,7 @@ export default {
   position: relative;
   transform-style: preserve-3d;
   background: rgba(255,255,255,0);
+  font-size: 3.4vw;
 }
 
 .card .side{
@@ -159,7 +160,6 @@ export default {
   border:2px solid #000;
   background: #fff;
   color: #000;
-  font-size: 1.2em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -170,8 +170,6 @@ export default {
   color: #fff;
   transform: rotateY(180deg);
   overflow: hidden;
-  font-size: 3.4vw;
-  line-height: 6vw;
 }
 
 .front-content{
@@ -182,11 +180,12 @@ export default {
 .back-content{
   height: 100vh;
   width: 100vw;
-  padding:100px 100px 40px;
+  padding:100px 40px 40px;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
   display: none;
   transition: 0s display;
+  line-height: 6vw;
 }
 
 .back-content.show{
@@ -207,9 +206,13 @@ export default {
   transform: scale(.8);
 }
 
-@media screen and (min-width: 1200px){
-  .card .back{
-    font-size: 2.3em;
+@media screen and (min-width: 750px){
+  .card{
+    font-size: 25.5px;
+  }
+
+  .back-content{
+    line-height: 45px;
   }
 }
 </style>
