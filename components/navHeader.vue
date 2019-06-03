@@ -24,8 +24,7 @@ header{
   top: 0px;
   left: 0px;
   right: 0px;
-  z-index: -1;
-  background: #fff;
+  z-index: 1;
   overflow: hidden;
   transition: top .25s;
   padding: 25px;

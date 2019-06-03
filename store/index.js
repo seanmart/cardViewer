@@ -2,7 +2,8 @@ export const state = () => ({
   activeCardId: null,
   hideHeader: false,
   onClose: [],
-  cardHasBeenFlipped: {}
+  cardHasBeenFlipped: {},
+  wordCloudIsActive: false
 });
 
 export const mutations = {
@@ -16,6 +17,9 @@ export const mutations = {
     if (!state.cardHasBeenFlipped[x]) {
       state.cardHasBeenFlipped = { ...state.cardHasBeenFlipped, [x]: true };
     }
+  },
+  setWordCloudIsActive(state, x) {
+    state.wordCloudIsActive = x;
   },
   setOnClose(state, action) {
     state.onClose.push(action);

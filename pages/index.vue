@@ -1,11 +1,11 @@
 <template lang="html">
-  <div class="container">
+  <div class="site-container">
     <navHeader />
     <navButton />
-    <div class="list-container">
+    <div class="content-container">
+      <wordCloud v-if="wordCloudActive" />
       <virtualList
         id="list"
-        :class="{ freeze }"
         :size="size"
         :remain="remain"
         :bench="8"
@@ -25,11 +25,13 @@ import row from "@/components/row";
 import virtualList from "vue-virtual-scroll-list";
 import navButton from "@/components/navButton";
 import navHeader from "@/components/navHeader";
+import wordCloud from "@/components/wordCloud";
 export default {
   components: {
     virtualList,
     navButton,
-    navHeader
+    navHeader,
+    wordCloud
   },
   data() {
     return {
@@ -46,6 +48,9 @@ export default {
     window.addEventListener("resize", this.handleResize);
   },
   computed: {
+    wordCloudActive() {
+      return this.$store.state.wordCloudIsActive;
+    },
     stories() {
       let id = 0;
       return chunk(stories, this.columns).map(r => {
@@ -54,9 +59,6 @@ export default {
           return { story: c, id };
         });
       });
-    },
-    freeze() {
-      return this.$store.state.activeCardId;
     }
   },
   watch: {
@@ -81,7 +83,8 @@ export default {
           columns: this.columns,
           gutter: this.gutter,
           size: this.size,
-          stories: this.stories[i]
+          stories: this.stories[i],
+          row: i
         }
       };
     }
@@ -91,22 +94,18 @@ export default {
 
 <style lang="css">
 
-.list-container{
+.content-container{
   perspective: 1000px;
   overflow: hidden;
   height: 100vh;
 }
 
-.container{
+.site-container{
   animation: fade-in 2s
 }
 #list{
   -webkit-overflow-scrolling: touch;
   padding: 95px 0px 5px;
-}
-
-#list.freeze{
-  overflow-y: hidden !important;
 }
 
 @keyframes fade-in{

@@ -26,9 +26,17 @@
 import { TimelineMax, TweenMax } from "gsap";
 import numberToWord from "@/plugins/numberToWord";
 export default {
+  beforeDestroy() {
+    if (this.active) {
+      this.unhideHeader && this.$store.commit("setHideHeader", false);
+      this.$store.commit("setActiveCardId", null);
+      this.$store.commit("clearOnClose");
+    }
+  },
   props: {
     card: Object,
-    gutter: Number
+    gutter: Number,
+    row: Number
   },
   computed: {
     active() {

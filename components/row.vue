@@ -8,7 +8,7 @@
       v-for="story in stories"
       :style="{ width: `${100 / columns}%` }"
     >
-      <card :key="story.id" :card="story" :gutter="gutter" />
+      <card :key="story.id" :card="story" :gutter="gutter" :row="row" />
     </div>
   </div>
 </template>
@@ -23,7 +23,8 @@ export default {
     size: { type: Number, default: 300 },
     gutter: { type: Number, default: 0 },
     stories: Array,
-    columns: Number
+    columns: Number,
+    row: Number
   }
 };
 </script>

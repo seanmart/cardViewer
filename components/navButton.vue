@@ -73,6 +73,7 @@ export default {
     },
     menuClicked() {
       this.loopWiggle();
+      this.$store.commit("setWordCloudIsActive", true);
     }
   }
 };
