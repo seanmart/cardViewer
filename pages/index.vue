@@ -5,6 +5,7 @@
     <div class="list-container">
       <virtualList
         id="list"
+        :class="{ freeze }"
         :size="size"
         :remain="remain"
         :bench="8"
@@ -53,6 +54,9 @@ export default {
           return { story: c, id };
         });
       });
+    },
+    freeze() {
+      return this.$store.state.activeCardId;
     }
   },
   watch: {
@@ -97,6 +101,10 @@ export default {
 #list{
   -webkit-overflow-scrolling: touch;
   padding: 95px 0px 5px;
+}
+
+#list.freeze{
+  overflow-y: hidden !important;
 }
 
 @keyframes fade-in{
