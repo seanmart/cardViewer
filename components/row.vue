@@ -1,7 +1,7 @@
 <template lang="html">
   <div
     class="row"
-    :style="{ height: `${size}px`, padding: `0px ${gutter - 5}px` }"
+    :style="{ height: `${size}px`, padding: `0px ${gutter + 5}px` }"
   >
     <div
       class="column"

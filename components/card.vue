@@ -1,12 +1,15 @@
 <template lang="html">
   <div class="card-container" ref="container">
     <div class="card" ref="card">
-      <div class="front side" @click="cardActive()" ref="front">
-        <h1>{{ card.title }}</h1>
+      <div class="front side" @click="cardActive()">
+        <div class="front-content" ref="front">
+          <h1>{{ card.story.replace(/(([^\s]+\s\s*){10})(.*)/, "$1…") }}</h1>
+        </div>
       </div>
-      <div class="back side" ref="back">
-        <h1>{{ card.title }}</h1>
-        <p>{{ card.content }}</p>
+      <div class="back side">
+        <div class="back-content" :class="{ show }">
+          <p>{{ card.story }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -33,6 +36,7 @@ export default {
   data() {
     return {
       tl: null,
+      show: false,
       beforeStyles: {},
       afterStyles: {
         top: 0,
@@ -67,8 +71,11 @@ export default {
       let dur = this.flipDuration;
       let container = this.$refs.container;
       let card = this.$refs.card;
+      let front = this.$refs.front;
 
       let rect = container.getBoundingClientRect();
+
+      this.show = true;
 
       this.beforeStyles = {
         top: rect.top,
@@ -80,6 +87,8 @@ export default {
         padding: container.style.padding,
         background: "rgba(255, 255, 255, 0)"
       };
+
+      this.tl.set(front, { width: front.offsetWidth });
 
       this.tl.set(container, this.beforeStyles);
       this.tl.to(container, dur, this.afterStyles);
@@ -95,6 +104,7 @@ export default {
         TweenMax.set(container, { clearProps: "all" });
         this.unhideHeader && this.$store.commit("setHideHeader", false);
         this.unhideHeader = false;
+        this.show = false;
       });
     }
   }
@@ -105,7 +115,7 @@ export default {
 
 .card-container{
   position: relative;
-  padding: 5px;
+  padding: 3px;
   height: 100%;
   width: 100%;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -129,23 +139,50 @@ export default {
   backface-visibility: hidden;
   border-radius: 0px;
   overflow: hidden;
-  border:1px solid #ddd;
-  background: #f1f1f1;
-  color: #1a4369;
-  padding: 20px;
+  max-width: 100vw;
+  max-height: 100vh;
 }
 
 .card .front{
   user-select: none;
   transition: transform .5s;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 10%;
+  border:2px solid #000;
+  background: #fff;
+  color: #000;
+  font-size: 1.2em;
 }
 
 .card .back{
+  background: #000;
+  color: #fff;
   transform: rotateY(180deg);
+  overflow: hidden;
+  font-size: 3.4vw;
+}
+
+.back-content{
+  height: 100vh;
+  width: 100vw;
+  padding:100px 100px 40px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  display: none;
+  transition: 0s display;
+}
+
+.back-content.show{
+  display: block;
+}
+
+.card p{
+  font-size: inherit;
+  font-weight: 400
+}
+
+.card h1{
+  font-size: inherit;
+  font-weight: 400;
 }
 
 .card .front:active{

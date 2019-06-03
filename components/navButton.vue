@@ -107,16 +107,18 @@ export default {
   transition: transform .5s;
   overflow: hidden;
   border-radius: 100%;
-  fill: white;
 }
 
 .button.menu{
-  background: #3177b8;
+  background: #000;
+  fill: white;
 }
 
 .button.close{
-  background: #ba0d2b;
+  background: #fff;
   transform: rotateY(180deg);
+  fill: #000;
+  border: 2px solid #000;
 }
 
 .close-button-on .menu{
@@ -128,7 +130,7 @@ export default {
 }
 
 .close-button-on{
-  transform: translate(-20px, 20px) scale(1.1);
+  transform: scale(1.1);
 }
 
 .button:active{

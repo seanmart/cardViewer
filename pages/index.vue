@@ -19,7 +19,7 @@
 
 <script>
 import { chunk } from "lodash";
-import stories from "@/content/stories";
+import stories from "@/content/stories.json";
 import row from "@/components/row";
 import virtualList from "vue-virtual-scroll-list";
 import navButton from "@/components/navButton";
@@ -37,7 +37,7 @@ export default {
       columns: 3,
       size: 0,
       remain: 0,
-      gutter: 25
+      gutter: 0
     };
   },
   mounted() {
@@ -50,7 +50,7 @@ export default {
       return chunk(stories, this.columns).map(r => {
         return r.map(c => {
           id = id + 1;
-          return { ...c, id };
+          return { story: c, id };
         });
       });
     }
@@ -96,7 +96,7 @@ export default {
 }
 #list{
   -webkit-overflow-scrolling: touch;
-  padding: 95px 0px 20px;
+  padding: 95px 0px 5px;
 }
 
 @keyframes fade-in{
