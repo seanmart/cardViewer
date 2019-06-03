@@ -33,7 +33,7 @@ export default {
     return {
       wiggle: false,
       wiggleSetTimeout: null,
-      delay: 60
+      delay: 30
     };
   },
   mounted() {
@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     clearWiggle() {
+      this.wiggle = false;
       this.wiggleSetTimeout && clearInterval(this.wiggleSetTimeout);
     },
     loopWiggle() {

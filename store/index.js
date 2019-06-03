@@ -1,7 +1,8 @@
 export const state = () => ({
   activeCardId: null,
   hideHeader: false,
-  onClose: []
+  onClose: [],
+  cardHasBeenFlipped: {}
 });
 
 export const mutations = {
@@ -10,6 +11,11 @@ export const mutations = {
   },
   setActiveCardId(state, x) {
     state.activeCardId = x;
+  },
+  setCardhasBeenFlipped(state, x) {
+    if (!state.cardHasBeenFlipped[x]) {
+      state.cardHasBeenFlipped = { ...state.cardHasBeenFlipped, [x]: true };
+    }
   },
   setOnClose(state, action) {
     state.onClose.push(action);

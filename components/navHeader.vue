@@ -1,11 +1,13 @@
 <template lang="html">
   <header :class="{ hide }">
-    <img src="/logo.png" class="logo" alt="logo" />
+    <Logo class="logo" />
   </header>
 </template>
 
 <script>
+import Logo from "./Logo";
 export default {
+  components: { Logo },
   computed: {
     hide() {
       return this.$store.state.hideHeader;

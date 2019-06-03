@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="card-container" ref="container">
+  <div class="card-container" ref="container" :class="{ seen }">
     <div class="card" ref="card">
       <div class="front side" @click="cardActive()">
         <div class="front-content" ref="front">
@@ -33,6 +33,9 @@ export default {
   computed: {
     active() {
       return this.$store.state.activeCardId === this.card.id;
+    },
+    seen() {
+      return this.$store.state.cardHasBeenFlipped[this.card.id];
     }
   },
   watch: {
@@ -108,6 +111,8 @@ export default {
       let container = this.$refs.container;
       let front = this.$refs.front;
 
+      this.$store.commit("setCardhasBeenFlipped", this.card.id);
+
       this.tl.reverse().eventCallback("onReverseComplete", () => {
         TweenMax.set(container, { clearProps: "all" });
         TweenMax.set(front, { clearProps: "all" });
@@ -163,6 +168,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.card-container.seen .front{
+  color: #aaa;
+  background: #f1f1f1;
 }
 
 .card .back{
