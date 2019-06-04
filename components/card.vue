@@ -1,21 +1,23 @@
 <template lang="html">
-  <div class="card-container" ref="container" :class="{ seen }">
-    <div class="card" ref="card">
-      <div class="front side" @click="cardActive()">
-        <div class="front-content" ref="front">
-          <h1>
-            {{
-              card.story
-                .split(" ")
-                .slice(0, 3)
-                .join(" ")
-            }}...
-          </h1>
+  <div class="card" ref="card" :class="{ seen }">
+    <div class="inner-card" ref="container">
+      <div class="card-sides" ref="sides">
+        <div class="front" @click="cardActive()">
+          <div class="content">
+            <p>
+              {{
+                card.story
+                  .split(" ")
+                  .slice(0, 3)
+                  .join(" ")
+              }}...
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="back side">
-        <div class="back-content" :class="{ show }">
-          <p>{{ card.story }}</p>
+        <div class="back">
+          <div class="content">
+            <p>{{ card.story }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -24,19 +26,17 @@
 
 <script>
 import { TimelineMax, TweenMax } from "gsap";
-import numberToWord from "@/plugins/numberToWord";
 export default {
-  beforeDestroy() {
-    if (this.active) {
-      this.unhideHeader && this.$store.commit("setHideHeader", false);
-      this.$store.commit("setActiveCardId", null);
-      this.$store.commit("clearOnClose");
-    }
-  },
   props: {
     card: Object,
     gutter: Number,
     row: Number
+  },
+  data() {
+    return {
+      unhideHeader: false,
+      animationDuration: 0.75
+    };
   },
   computed: {
     active() {
@@ -48,24 +48,8 @@ export default {
   },
   watch: {
     active() {
-      this.active ? this.flipOpen() : this.flipClose();
+      this.active ? this.open() : this.close();
     }
-  },
-  data() {
-    return {
-      tl: null,
-      show: false,
-      beforeStyles: {},
-      afterStyles: {
-        top: 0,
-        left: 0,
-        height: "100%",
-        width: "100%",
-        padding: this.gutter
-      },
-      unhideHeader: false,
-      flipDuration: 0.75
-    };
   },
   methods: {
     cardActive() {
@@ -84,50 +68,70 @@ export default {
         this.unhideHeader = true;
       }
     },
-    flipOpen() {
-      this.tl = new TimelineMax();
-      let dur = this.flipDuration;
-      let container = this.$refs.container;
-      let card = this.$refs.card;
-      let front = this.$refs.front;
+    open() {
+      let tl = new TimelineMax();
+      let refs = this.refs();
+      let rect = this.getRect();
 
-      let rect = container.getBoundingClientRect();
-
-      this.show = true;
-
-      this.beforeStyles = {
+      tl.set(refs.container, {
         top: rect.top,
         left: rect.left,
         width: rect.width,
         height: rect.height,
         position: "fixed",
-        zIndex: 5,
-        padding: container.style.padding,
-        background: "rgba(255, 255, 255, 0)"
-      };
+        zIndex: 5
+      });
 
-      this.tl.set(front, { width: front.offsetWidth });
+      tl.to(refs.container, this.animationDuration, {
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        padding: 0
+      });
 
-      this.tl.set(container, this.beforeStyles);
-      this.tl.to(container, dur, this.afterStyles);
-      this.tl.to(card, dur, { rotationY: 180, ease: Power1.easeInOut }, 0);
-      this.tl.to(container, 0.2, { background: "rgba(255,255,255,1)" });
+      tl.to(refs.sides, this.animationDuration, { rotationY: 180 }, 0);
     },
-    flipClose() {
-      if (!this.tl) return;
+    close() {
+      let tl = new TimelineMax();
+      let refs = this.refs();
+      let rect = this.getRect();
 
-      let container = this.$refs.container;
-      let front = this.$refs.front;
+      tl.to(refs.container, this.animationDuration, {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+        padding: 5
+      });
 
-      this.$store.commit("setCardhasBeenFlipped", this.card.id);
+      tl.to(refs.sides, this.animationDuration, { rotationY: 0 }, 0);
 
-      this.tl.reverse().eventCallback("onReverseComplete", () => {
-        TweenMax.set(container, { clearProps: "all" });
-        TweenMax.set(front, { clearProps: "all" });
+      let callback = () => {
+        this.$store.commit("setCardhasBeenFlipped", this.card.id);
+        tl.set(refs.container, { clearProps: "all" });
         this.unhideHeader && this.$store.commit("setHideHeader", false);
         this.unhideHeader = false;
-        this.show = false;
-      });
+      };
+
+      tl.eventCallback("onComplete", callback());
+    },
+    getRect() {
+      return this.$refs.card.getBoundingClientRect();
+    },
+    refs() {
+      return {
+        card: this.$refs.card,
+        sides: this.$refs.sides,
+        container: this.$refs.container
+      };
+    }
+  },
+  beforeDestroy() {
+    if (this.active) {
+      this.unhideHeader && this.$store.commit("setHideHeader", false);
+      this.$store.commit("setActiveCardId", null);
+      this.$store.commit("clearOnClose");
     }
   }
 };
@@ -135,93 +139,66 @@ export default {
 
 <style lang="css">
 
-.card-container{
-  position: relative;
-  padding: 5px;
+.card, .inner-card,.card-sides{
   height: 100%;
   width: 100%;
-  -webkit-font-smoothing: subpixel-antialiased;
-  perspective: 1000
 }
 
 .card{
-  height: 100%;
-  width: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  background: rgba(255,255,255,0);
   font-size: 3.4vw;
 }
 
-.card .side{
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  backface-visibility: hidden;
-  border-radius: 0px;
-  overflow: hidden;
-  max-width: 100vw;
-  max-height: 100vh;
-}
-
-.card .front{
-  user-select: none;
-  transition: transform .5s;
-  padding: 10%;
-  border:2px solid #000;
-  background: #fff;
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-container.seen .front{
+.card.seen .front{
   color: #aaa;
   background: #f1f1f1;
 }
 
-.card .back{
-  background: #000;
-  color: #fff;
+.inner-card{
+  padding: 5px;
+  perspective: 1000
+}
+
+.card-sides{
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.front,.back{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  backface-visibility: hidden;
+}
+
+.front{
+  background: white;
+  border: 2px solid black;
+  color: black;
+}
+
+.front .content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.back{
+  background: black;
+  color: white;
   transform: rotateY(180deg);
   overflow: hidden;
 }
 
-.front-content{
-  text-align: center;
-  width: 100%;
-}
-
-.back-content{
+.back .content{
   height: 100vh;
   width: 100vw;
-  padding:100px 40px 40px;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-  display: none;
-  transition: 0s display;
-  line-height: 6vw;
-}
-
-.back-content.show{
-  display: block;
-}
-
-.card p{
-  font-size: inherit;
-  font-weight: 400
-}
-
-.card h1{
-  font-size: inherit;
-  font-weight: 400;
-}
-
-.card .front:active{
-  transform: scale(.8);
+  padding: 100px 50px 50px;
+  overflow: auto;
+  line-height: 1.5em;
 }
 
 @media screen and (min-width: 750px){
