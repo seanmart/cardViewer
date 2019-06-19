@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="button-container" :class="{ 'close-button-on': close, wiggle }">
-    <div class="menu button" @click="menuClicked">
+    <div class="menu button" @click="menuClicked" v-if="menu">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 22 22"
@@ -29,6 +29,9 @@
 
 <script>
 export default {
+  props: {
+    menu: { type: Boolean, default: true }
+  },
   data() {
     return {
       wiggle: false,
@@ -120,7 +123,6 @@ export default {
   background: #fff;
   transform: rotateY(180deg);
   fill: #000;
-  border: 2px solid #000;
 }
 
 .close-button-on .menu{

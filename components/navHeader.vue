@@ -1,13 +1,17 @@
 <template lang="html">
   <header :class="{ hide }">
-    <Logo class="logo" />
+    <Component :is="logo" class="logo" />
   </header>
 </template>
 
 <script>
-import Logo from "./Logo";
+import toddstreet from "./toddstreet";
+import cdr from "./cdr";
 export default {
-  components: { Logo },
+  components: { toddstreet, cdr },
+  props: {
+    logo: { type: String, default: "toddstreet" }
+  },
   computed: {
     hide() {
       return this.$store.state.hideHeader;
@@ -37,6 +41,7 @@ header.hide {
 }
 
 .logo{
-  height: 30px;
+  height: 100%;
+  max-width: 140px;
 }
 </style>

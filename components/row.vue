@@ -1,14 +1,11 @@
 <template lang="html">
-  <div
-    class="row"
-    :style="{ height: `${size}px`, padding: `0px ${gutter + 5}px` }"
-  >
+  <div class="row" :style="{ height: `${size}px` }">
     <div
       class="column"
-      v-for="story in stories"
+      v-for="card in cards"
       :style="{ width: `${100 / columns}%` }"
     >
-      <card :key="story.id" :card="story" :gutter="gutter" :row="row" />
+      <card :key="card.id" :card="card" :row="row" :cardStyle="cardStyle" />
     </div>
   </div>
 </template>
@@ -21,10 +18,10 @@ export default {
   },
   props: {
     size: { type: Number, default: 300 },
-    gutter: { type: Number, default: 0 },
-    stories: Array,
+    cards: Array,
     columns: Number,
-    row: Number
+    row: Number,
+    cardStyle: String
   }
 };
 </script>
@@ -34,6 +31,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  padding: 0px 15px;
 }
 
 .column{

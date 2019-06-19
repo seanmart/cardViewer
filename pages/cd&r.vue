@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="site-container">
-    <navHeader logo="toddstreet" />
-    <navButton />
+    <navHeader logo="cdr" />
+    <navButton :menu="false" />
     <div class="content-container">
       <wordCloud v-if="wordCloudActive" />
       <virtualList
@@ -20,7 +20,7 @@
 
 <script>
 import { chunk } from "lodash";
-import data from "@/content/stories.json";
+import data from "@/content/cd&r.json";
 import row from "@/components/row";
 import virtualList from "vue-virtual-scroll-list";
 import navButton from "@/components/navButton";
@@ -81,7 +81,7 @@ export default {
           size: this.size,
           cards: this.cards[i],
           row: i,
-          cardStyle: ""
+          cardStyle: "cdr"
         }
       };
     }

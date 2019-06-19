@@ -1,12 +1,13 @@
 <template lang="html">
-  <div class="card" ref="card" :class="{ seen }">
+  <div :class="['card', cardStyle, { seen }]" ref="card">
     <div class="inner-card" ref="container">
       <div class="card-sides" ref="sides">
         <div class="front" @click="cardActive()">
-          <div class="content">
-            <p>
+          <div class="content" ref="front">
+            <img v-if="card.image" :src="card.image" alt="" />
+            <p v-else>
               {{
-                card.story
+                card.text
                   .split(" ")
                   .slice(0, 3)
                   .join(" ")
@@ -16,7 +17,7 @@
         </div>
         <div class="back">
           <div class="content">
-            <p>{{ card.story }}</p>
+            <p>{{ card.text }}</p>
           </div>
         </div>
       </div>
@@ -29,11 +30,12 @@ import { TimelineMax, TweenMax } from "gsap";
 export default {
   props: {
     card: Object,
-    gutter: Number,
-    row: Number
+    row: Number,
+    cardStyle: String
   },
   data() {
     return {
+      spacing: 10,
       unhideHeader: false,
       animationDuration: 0.75
     };
@@ -71,7 +73,8 @@ export default {
     open() {
       let tl = new TimelineMax();
       let refs = this.refs();
-      let rect = this.getRect();
+
+      let rect = this.getRect(refs.card);
 
       tl.set(refs.container, {
         top: rect.top,
@@ -80,6 +83,13 @@ export default {
         height: rect.height,
         position: "fixed",
         zIndex: 5
+      });
+
+      rect = this.getRect(refs.front);
+
+      tl.set(refs.front, {
+        height: rect.height,
+        width: rect.width
       });
 
       tl.to(refs.container, this.animationDuration, {
@@ -95,14 +105,14 @@ export default {
     close() {
       let tl = new TimelineMax();
       let refs = this.refs();
-      let rect = this.getRect();
+      let rect = this.getRect(refs.card);
 
       tl.to(refs.container, this.animationDuration, {
         top: rect.top,
         left: rect.left,
         width: rect.width,
         height: rect.height,
-        padding: 5
+        padding: 10
       });
 
       tl.to(refs.sides, this.animationDuration, { rotationY: 0 }, 0);
@@ -110,20 +120,22 @@ export default {
       let callback = () => {
         this.$store.commit("setCardhasBeenFlipped", this.card.id);
         tl.set(refs.container, { clearProps: "all" });
+        tl.set(refs.front, { clearProps: "all" });
         this.unhideHeader && this.$store.commit("setHideHeader", false);
         this.unhideHeader = false;
       };
 
       tl.eventCallback("onComplete", callback());
     },
-    getRect() {
-      return this.$refs.card.getBoundingClientRect();
+    getRect(x) {
+      return x.getBoundingClientRect();
     },
     refs() {
       return {
         card: this.$refs.card,
         sides: this.$refs.sides,
-        container: this.$refs.container
+        container: this.$refs.container,
+        front: this.$refs.front
       };
     }
   },
@@ -148,13 +160,12 @@ export default {
   font-size: 3.4vw;
 }
 
-.card.seen .front{
-  color: #aaa;
-  background: #f1f1f1;
+.card.seen .front p{
+  opacity: .5
 }
 
 .inner-card{
-  padding: 5px;
+  padding: 10px;
   perspective: 1000
 }
 
@@ -176,6 +187,20 @@ export default {
   background: white;
   border: 2px solid black;
   color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.front img{
+  max-width: 80%;
+}
+
+.cdr .front{
+  color: #4972aa;
+  border: 1px solid #CDDCEB;
+  background: white;
+  box-shadow: 0px 10px 20px -12px #2b5083
 }
 
 .front .content{
@@ -191,6 +216,10 @@ export default {
   color: white;
   transform: rotateY(180deg);
   overflow: hidden;
+}
+
+.cdr .back{
+  background: #4972aa
 }
 
 .back .content{
