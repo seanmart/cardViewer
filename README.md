@@ -1,6 +1,6 @@
-# otsukaStories_v1
+# toddstreet-stories-v2
 
-> My dandy Nuxt.js project
+> My prime Nuxt.js project
 
 ## Build Setup
 

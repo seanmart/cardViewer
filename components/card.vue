@@ -1,23 +1,35 @@
 <template lang="html">
-  <div :class="['card', cardStyle, { seen }]" ref="card">
-    <div class="inner-card" ref="container">
-      <div class="card-sides" ref="sides">
-        <div class="front" @click="cardActive()">
-          <div class="content" ref="front">
-            <img v-if="card.image" :src="card.image" alt="" />
-            <p v-else>
-              {{
-                card.text
-                  .split(" ")
-                  .slice(0, 3)
-                  .join(" ")
-              }}...
-            </p>
+  <div class="card" :style="cardStyles" ref="card">
+    <div class="inner-card" ref="innercard">
+      <div class="sides" ref="sides">
+        <div class="front side" :style="frontStyles" @click="open">
+          <div class="content">
+            <img v-if="data.front.image" :src="data.front.image" alt="" />
+            <h3 v-if="data.front.title" :style="titleStyles">
+              {{ data.front.title }}
+            </h3>
           </div>
         </div>
-        <div class="back">
+        <div class="back side" :style="backStyles" v-if="render">
           <div class="content">
-            <p>{{ card.text }}</p>
+            <h1 v-if="data.back.title" class="row title" :style="titleStyles">
+              {{ data.back.title }}
+            </h1>
+
+            <div class="row images" v-if="data.back.images">
+              <div
+                class="image"
+                v-for="img in data.back.images"
+                :style="{
+                  backgroundImage: `url(${img})`,
+                  flex: `0 0 ${data.back.images.length > 1 ? '50%' : '100%'}`
+                }"
+              />
+            </div>
+
+            <p v-if="data.back.text" class="row text" :style="textStyles">
+              {{ data.back.text }}
+            </p>
           </div>
         </div>
       </div>
@@ -26,217 +38,188 @@
 </template>
 
 <script>
-import { TimelineMax, TweenMax } from "gsap";
+import flip from "@/plugins/flip";
 export default {
   props: {
-    card: Object,
-    row: Number,
-    cardStyle: String
+    data: Object,
+    params: Object,
+    id: Number
   },
   data() {
     return {
-      spacing: 10,
-      unhideHeader: false,
-      animationDuration: 0.75
+      render: false
     };
   },
   computed: {
     active() {
-      return this.$store.state.activeCardId === this.card.id;
+      return this.$store.state.activeCard === this.id;
     },
-    seen() {
-      return this.$store.state.cardHasBeenFlipped[this.card.id];
+    cardStyles() {
+      let columns = this.params.columns || 3;
+      return {
+        width: `${100 / columns}%`
+      };
+    },
+    titleStyles() {
+      if (!this.params.styles) return;
+      return this.params.styles.title || {};
+    },
+    textStyles() {
+      if (!this.params.styles) return;
+      return this.params.styles.text || {};
+    },
+    frontStyles() {
+      if (!this.params.styles || !this.params.styles.front) {
+        return {
+          border: "1px solid black",
+          background: "white",
+          color: "black"
+        };
+      }
+      return this.params.styles.front;
+    },
+    backStyles() {
+      if (!this.params.styles || !this.params.styles.back) {
+        return {
+          background: "black",
+          color: "white"
+        };
+      }
+      return this.params.styles.back;
     }
   },
   watch: {
     active() {
-      this.active ? this.open() : this.close();
+      let params = {
+        grow: this.$refs.innercard,
+        flip: this.$refs.sides,
+        container: this.$refs.card,
+        padding: 5
+      };
+      if (this.active) {
+        this.render = true;
+        flip.open(params);
+      } else {
+        flip.close(params);
+        setTimeout(() => (this.render = false), 1000);
+      }
     }
   },
   methods: {
-    cardActive() {
-      // set the active card id to store
-      this.$store.commit("setActiveCardId", this.card.id);
-
-      // add action for when the close button is clicked
-      this.$store.commit("setOnClose", {
-        action: "setActiveCardId",
-        value: null
-      });
-
-      // hide the header if its visible
-      if (!this.$store.state.hideHeader) {
-        this.$store.commit("setHideHeader", true);
-        this.unhideHeader = true;
-      }
-    },
     open() {
-      let tl = new TimelineMax();
-      let refs = this.refs();
-
-      let rect = this.getRect(refs.card);
-
-      tl.set(refs.container, {
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height,
-        position: "fixed",
-        zIndex: 5
-      });
-
-      rect = this.getRect(refs.front);
-
-      tl.set(refs.front, {
-        height: rect.height,
-        width: rect.width
-      });
-
-      tl.to(refs.container, this.animationDuration, {
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        padding: 0
-      });
-
-      tl.to(refs.sides, this.animationDuration, { rotationY: 180 }, 0);
-    },
-    close() {
-      let tl = new TimelineMax();
-      let refs = this.refs();
-      let rect = this.getRect(refs.card);
-
-      tl.to(refs.container, this.animationDuration, {
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height,
-        padding: 10
-      });
-
-      tl.to(refs.sides, this.animationDuration, { rotationY: 0 }, 0);
-
-      let callback = () => {
-        this.$store.commit("setCardhasBeenFlipped", this.card.id);
-        tl.set(refs.container, { clearProps: "all" });
-        tl.set(refs.front, { clearProps: "all" });
-        this.unhideHeader && this.$store.commit("setHideHeader", false);
-        this.unhideHeader = false;
-      };
-
-      tl.eventCallback("onComplete", callback());
-    },
-    getRect(x) {
-      return x.getBoundingClientRect();
-    },
-    refs() {
-      return {
-        card: this.$refs.card,
-        sides: this.$refs.sides,
-        container: this.$refs.container,
-        front: this.$refs.front
-      };
-    }
-  },
-  beforeDestroy() {
-    if (this.active) {
-      this.unhideHeader && this.$store.commit("setHideHeader", false);
-      this.$store.commit("setActiveCardId", null);
-      this.$store.commit("clearOnClose");
+      this.$store.commit("setActiveCard", this.id);
     }
   }
 };
 </script>
 
 <style lang="css">
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap');
 
-.card, .inner-card,.card-sides{
+.card{
+  flex: 0 0 auto;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.card:before {
+    content:'';
+    float:left;
+    padding-top:100%;
+}
+
+.inner-card{
+  padding: 5px;
+  perspective: 2000px;
+}
+.inner-card, .sides,.side{
   height: 100%;
   width: 100%;
 }
 
-.card{
-  font-size: 3.4vw;
-}
-
-.card.seen .front p{
-  opacity: .5
-}
-
-.inner-card{
-  padding: 10px;
-  perspective: 1000
-}
-
-.card-sides{
+.sides{
   position: relative;
   transform-style: preserve-3d;
 }
 
-.front,.back{
+.side{
   position: absolute;
   top: 0px;
   left: 0px;
-  bottom: 0px;
   right: 0px;
+  bottom: 0px;
   backface-visibility: hidden;
 }
 
-.front{
-  background: white;
-  border: 2px solid black;
-  color: black;
+.front .content{
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .front img{
-  max-width: 80%;
-}
-
-.cdr .front{
-  color: #4972aa;
-  border: 1px solid #CDDCEB;
-  background: white;
-  box-shadow: 0px 10px 20px -12px #2b5083
-}
-
-.front .content{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
+  width: 80%;
 }
 
 .back{
-  background: black;
-  color: white;
   transform: rotateY(180deg);
   overflow: hidden;
-}
-
-.cdr .back{
-  background: #4972aa
 }
 
 .back .content{
   height: 100vh;
   width: 100vw;
-  padding: 100px 50px 50px;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
-  line-height: 1.5em;
+  padding: 5vw;
 }
 
-@media screen and (min-width: 750px){
-  .card{
-    font-size: 25.5px;
-  }
+.back .row{
+  flex: 0 0 auto;
+  padding: 20px 0px;
+}
 
-  .back-content{
-    line-height: 45px;
+.back .images{
+  width: 100%;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.back .image{
+  height: 40vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.back h1{
+  font-size: calc(2em + 1vw);
+}
+
+.back p{
+  font-size: calc(.8em + 1vw);
+}
+
+
+
+@media screen and (max-width: 900px){
+  .card{
+    min-width: 33.333%
   }
+}
+
+@media screen and (max-width: 600px){
+  .card{
+    min-width: 50%
+  }
+}
+
+@keyframes fade-in{
+  from{opacity: 0}
+  to{opacity: 1}
 }
 </style>
