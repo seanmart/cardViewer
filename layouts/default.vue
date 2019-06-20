@@ -23,4 +23,13 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 </style>

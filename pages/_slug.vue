@@ -61,6 +61,8 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 0px 5px 5px;
+  opacity: 0;
+  animation: fade-in 2s forwards
 }
 header{
   flex: 0 0 auto;
