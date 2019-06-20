@@ -177,7 +177,8 @@ export default {
 
 .back .row{
   flex: 0 0 auto;
-  padding: 20px 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .back .images{
@@ -198,10 +199,11 @@ export default {
 
 .back h1{
   font-size: calc(2em + 1vw);
+  padding-right: 100px;
 }
 
 .back p{
-  font-size: calc(.8em + 1vw);
+  font-size: calc(.8em + .5vw);
 }
 
 
