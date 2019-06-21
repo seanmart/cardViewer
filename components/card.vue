@@ -120,6 +120,7 @@ export default {
 .card{
   flex: 0 0 auto;
   font-family: 'Open Sans', sans-serif;
+  animation: slide-in-bottom 1s backwards;
 }
 
 .card:before {
@@ -185,8 +186,7 @@ export default {
   max-height: 700px;
   flex-direction: column;
   position: relative;
-  opacity: 0;
-  animation: slide-in-bottom 1.5s forwards;
+  animation: slide-in-top 1s backwards;
   animation-delay: .2s;
 }
 
@@ -201,14 +201,14 @@ export default {
 
 .back .text{
   padding-left: 5vw;
-  opacity: 0;
-  animation: fade-in 1s forwards;
+  animation: fade-in 1s backwards;
   animation-delay: .5s
 }
 
 .back h1{
   font-size: calc(1.5em + 1vw);
   margin: 0px 0px 20px;
+  letter-spacing: -.01vw;
 }
 
 .back p{
@@ -234,39 +234,6 @@ export default {
   .back .text{
     padding-top: 5vw;
     padding-left: 0px
-  }
-}
-
-@keyframes slide-in-right{
-  from{
-    opacity:0;
-    transform: translateX(50px);
-  }
-  to{
-    opacity:1;
-    transform: translateX(0px);
-  }
-}
-
-@keyframes slide-in-left{
-  from{
-    opacity:0;
-    transform: translateX(-50px);
-  }
-  to{
-    opacity:1;
-    transform: translateX(0px);
-  }
-}
-
-@keyframes slide-in-bottom{
-  from{
-    opacity:0;
-    transform: translateY(50px);
-  }
-  to{
-    opacity:1;
-    transform: translateY(0px);
   }
 }
 </style>

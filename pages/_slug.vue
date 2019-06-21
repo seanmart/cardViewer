@@ -13,6 +13,7 @@
       />
       <card
         v-for="(item, i) in items"
+        :style="{ animationDelay: `${i * 0.15}s` }"
         :key="i"
         :data="item"
         :params="params"
@@ -61,8 +62,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 0px 5px 5px;
-  opacity: 0;
-  animation: fade-in 2s forwards
+  animation: fade-in 2s backwards
 }
 header{
   flex: 0 0 auto;
