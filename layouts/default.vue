@@ -77,6 +77,17 @@ html {
   }
 }
 
+@keyframes fade-in-big {
+  from {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes tracking-in-contract {
   0% {
     white-space: nowrap;

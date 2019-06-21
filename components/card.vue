@@ -186,8 +186,8 @@ export default {
   max-height: 700px;
   flex-direction: column;
   position: relative;
-  animation: fade-in 1s backwards;
-  animation-delay: .5s;
+  animation: fade-in-big 1s backwards;
+  animation-delay: .4s;
 }
 
 
@@ -202,7 +202,7 @@ export default {
 .back .text{
   padding-left: 5vw;
   animation: slide-in-right 1s backwards;
-  animation-delay: .5s
+  animation-delay: .6s
 }
 
 .back h1{
