@@ -213,6 +213,7 @@ export default {
 
 .back p{
   font-size: calc(.8em + .5vw);
+  line-height: calc(1.2em + .5vw)
 }
 
 
