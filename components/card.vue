@@ -186,8 +186,8 @@ export default {
   max-height: 700px;
   flex-direction: column;
   position: relative;
-  animation: slide-in-top 1s backwards;
-  animation-delay: .2s;
+  animation: fade-in 1s backwards;
+  animation-delay: .5s;
 }
 
 
@@ -201,20 +201,19 @@ export default {
 
 .back .text{
   padding-left: 5vw;
-  animation: fade-in 1s backwards;
+  animation: slide-in-right 1s backwards;
   animation-delay: .5s
 }
 
 .back h1{
   font-size: calc(1.5em + 1vw);
   margin: 0px 0px 20px;
-  letter-spacing: -.05vw;
-  font-weight: 900
+  font-weight: 900;
 }
 
 .back p{
   font-size: calc(.8em + .5vw);
-  line-height: calc(1.2em + .5vw)
+  line-height: calc(1.2em + .5vw);
 }
 
 

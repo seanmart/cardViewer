@@ -76,4 +76,20 @@ html {
     opacity: 1;
   }
 }
+
+@keyframes tracking-in-contract {
+  0% {
+    white-space: nowrap;
+    letter-spacing: 0.2em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    white-space: nowrap;
+    letter-spacing: normal;
+    opacity: 1;
+  }
+}
 </style>
