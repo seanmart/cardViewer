@@ -208,7 +208,8 @@ export default {
 .back h1{
   font-size: calc(1.5em + 1vw);
   margin: 0px 0px 20px;
-  letter-spacing: -.01vw;
+  letter-spacing: -.05vw;
+  font-weight: 900
 }
 
 .back p{
