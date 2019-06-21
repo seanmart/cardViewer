@@ -24,8 +24,8 @@ export default {
 
 <style lang="css">
 .button{
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
   border-radius: 100%;
   background: white;
   fill: black;

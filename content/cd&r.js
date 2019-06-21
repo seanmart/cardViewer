@@ -10,19 +10,16 @@ export default {
       front: {
         border: "1px solid #CDDCEB",
         background: "white",
-        boxShadow: "0px 10px 20px -12px #2b5083"
+        boxShadow: "0px 3px 5px -5px #2b5083"
       },
       back: {
         border: "1px solid #CDDCEB",
-        background: "white",
-        boxShadow: "0px 10px 20px -12px #2b5083"
+        backgroundColor: "white",
+        backgroundImage: "url('/images/dots.png')",
+        boxShadow: "0px 3px 5px -5px #2b5083"
       },
       title: {
-        color: "#fff",
-        background:
-          "linear-gradient(to right, rgba(59,115,175,1) 0%,rgba(59,115,175,0) 100%)",
-        paddingLeft: "20px",
-        marginBottom: "20px"
+        color: "#222"
       },
       text: { color: "#595b57" }
     }
@@ -49,7 +46,7 @@ export default {
     {
       front: { image: "/logos/beacon.jpg" },
       back: {
-        images: ["/images/beacon.jpg", "/images/beacon2.jpg"],
+        images: ["/images/beacon2.jpg"],
         title: "Beacon Roofing Supply",
         text:
           "North America’s largest publicly traded roofing distributor of residential and commercial roofing materials and complementary quality building products with over 500 locations in the 50 US states and 6 Canadian provinces."
@@ -85,7 +82,7 @@ export default {
     {
       front: { image: "/logos/carestream.jpg" },
       back: {
-        title: "carestream",
+        title: "Carestream Dental",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -100,8 +97,8 @@ export default {
     },
     {
       front: { image: "/logos/cornerstone.jpg" },
-      title: "Cornerstone",
       back: {
+        title: "Cornerstone",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -117,7 +114,7 @@ export default {
     {
       front: { image: "/logos/drive.jpg" },
       back: {
-        title: "Drive",
+        title: "DeVilbiss Healthcare",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -133,7 +130,7 @@ export default {
     {
       front: { image: "/logos/highridge.jpg" },
       back: {
-        title: "High Ridge",
+        title: "High Ridge Brands",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -141,7 +138,7 @@ export default {
     {
       front: { image: "/logos/kalle.jpg" },
       back: {
-        title: "Kalle",
+        title: "Kalle Group",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -149,7 +146,7 @@ export default {
     {
       front: { image: "/logos/mfg.jpg" },
       back: {
-        title: "MFG",
+        title: "Motor Fuel Group",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -165,7 +162,7 @@ export default {
     {
       front: { image: "/logos/powerteam.jpg" },
       back: {
-        title: "Powerteam",
+        title: "Powerteam Services",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -173,7 +170,7 @@ export default {
     {
       front: { image: "/logos/safway.jpg" },
       back: {
-        title: "Safway",
+        title: "Brand Safway",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -189,7 +186,7 @@ export default {
     {
       front: { image: "/logos/smile.jpg" },
       back: {
-        title: "Smile Direct",
+        title: "Smile Direct Club",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -205,7 +202,7 @@ export default {
     {
       front: { image: "/logos/sunsource.jpg" },
       back: {
-        title: "Sunsource",
+        title: "SunSource",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -229,7 +226,7 @@ export default {
     {
       front: { image: "/logos/wilson.jpg" },
       back: {
-        title: "Wilson",
+        title: "Wilsonart",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
@@ -237,7 +234,7 @@ export default {
     {
       front: { image: "/logos/wsh.jpg" },
       back: {
-        title: "WSH",
+        title: "wsh",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }

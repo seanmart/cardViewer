@@ -12,11 +12,7 @@
         </div>
         <div class="back side" :style="backStyles" v-if="render">
           <div class="content">
-            <h1 v-if="data.back.title" class="row title" :style="titleStyles">
-              {{ data.back.title }}
-            </h1>
-
-            <div class="row images" v-if="data.back.images">
+            <div class="images" v-if="data.back.images">
               <div
                 class="image"
                 v-for="img in data.back.images"
@@ -26,10 +22,14 @@
                 }"
               />
             </div>
-
-            <p v-if="data.back.text" class="row text" :style="textStyles">
-              {{ data.back.text }}
-            </p>
+            <div class="text">
+              <h1 v-if="data.back.title" :style="titleStyles">
+                {{ data.back.title }}
+              </h1>
+              <p v-if="data.back.text" :style="textStyles">
+                {{ data.back.text }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -47,7 +47,8 @@ export default {
   },
   data() {
     return {
-      render: false
+      render: false,
+      side: null
     };
   },
   computed: {
@@ -164,42 +165,50 @@ export default {
 .back{
   transform: rotateY(180deg);
   overflow: hidden;
+  background-size: cover;
+  background-position: bottom;
 }
 
 .back .content{
   height: 100vh;
   width: 100vw;
-  display: flex;
-  flex-direction: column;
   overflow: auto;
   padding: 5vw;
-}
-
-.back .row{
-  flex: 0 0 auto;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  display: flex;
+  flex-direction: row;
 }
 
 .back .images{
-  width: 100%;
-  flex: 0 0 auto;
+  flex: 0 0 50%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  height: 100%;
+  max-height: 700px;
+  flex-direction: column;
+  position: relative;
+  opacity: 0;
+  animation: slide-in-bottom 1.5s forwards;
+  animation-delay: .2s;
 }
 
+
+
 .back .image{
-  height: 40vh;
+  flex: 0 1 auto;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 
+.back .text{
+  padding-left: 5vw;
+  opacity: 0;
+  animation: fade-in 1s forwards;
+  animation-delay: .5s
+}
+
 .back h1{
-  font-size: calc(2em + 1vw);
-  padding-right: 100px;
+  font-size: calc(1.5em + 1vw);
+  margin: 0px 0px 20px;
 }
 
 .back p{
@@ -217,6 +226,47 @@ export default {
 @media screen and (max-width: 600px){
   .card{
     min-width: 50%
+  }
+  .back .content{
+    flex-direction: column;
+    padding-top: 90px;
+  }
+  .back .text{
+    padding-top: 5vw;
+    padding-left: 0px
+  }
+}
+
+@keyframes slide-in-right{
+  from{
+    opacity:0;
+    transform: translateX(50px);
+  }
+  to{
+    opacity:1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slide-in-left{
+  from{
+    opacity:0;
+    transform: translateX(-50px);
+  }
+  to{
+    opacity:1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slide-in-bottom{
+  from{
+    opacity:0;
+    transform: translateY(50px);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0px);
   }
 }
 </style>
