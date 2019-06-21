@@ -40,7 +40,7 @@ export default {
         title: "American Greetings",
         images: ["/images/americangreetings.jpg"],
         text:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          "A family owned Cleveland-based expression products company specializing in greeting cards, party goods and gift wrapping. They are the world’s 2nd largest all occasions greeting card producer with brands including Papyrus, Carlton Cards and American Greetings."
       }
     },
     {
@@ -73,7 +73,7 @@ export default {
     {
       front: { image: "/logos/capco.jpg" },
       back: {
-        images: ["images/capco.jpg"],
+        images: ["/images/capco.jpg"],
         title: "Capco",
         text:
           "A global management and technology consulting firm dedicated to the financial services industry specializing in energy practice, banking, and insurance for businesses to increase revenue, reduce costs, manage risk and enhance controls."
