@@ -231,7 +231,7 @@ export default {
   }
   .back .content{
     flex-direction: column;
-    padding-top: 90px;
+    padding-top: 100px;
   }
   .back .text{
     padding-top: 5vw;
